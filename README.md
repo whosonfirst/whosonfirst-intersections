@@ -19,7 +19,7 @@ This is work in progress. Specifically we are trying to figure out to operationa
 
 ## Example
 
-### setup
+### Setup
 
 Run the `whosonfirst_postgis::default` Chefworks recipe. If you don't work at Mapzen basically that means "install PostGIS".
 
@@ -30,21 +30,25 @@ psql -c "CREATE EXTENSION postgis; CREATE EXTENSION postgis_topology; CREATE EXT
 
 ### Los Angeles
 
-* https://www.census.gov/cgi-bin/geo/shapefiles/index.php?year=2016&layergroup=Roads
+#### Step 1
+
+Download https://www.census.gov/cgi-bin/geo/shapefiles/index.php?year=2016&layergroup=Roads
+
+#### Step 2
 
 ```
-shp2pgsql -s 4326 -T tl_2016_06037_roads.shp > la_roads.sql
-perl -p -i -e 's/tl_2016_06037_roads/la_roads/g' la_roads.sql
+shp2pgsql -s 4326 tl_2016_06037_roads.shp la_roads > la_roads.sql
 psql -d roads -f la_roads.sql
 ```
 
-* https://gis.stackexchange.com/questions/209713/postgis-dissolve-geometries-from-shapefiles
-* https://gis.stackexchange.com/questions/17495/dissolve-or-unsplit-lines-on-common-attributes-in-postgis-or-grass
+#### Step 3
 
 ```
 SELECT fullname, COUNT(gid) AS count FROM la_roads GROUP BY fullname HAVING fullname != ''
-SELECT ST_AsText(ST_Union(geom)) FROM la_roads WHERE fullname = '4th St';
+SELECT ST_AsText(ST_Union(geom)) FROM la_roads WHERE fullname = '{FULLNAME}';
 ```
+
+_This is as far as we've gotten..._
 
 ## See also
 
