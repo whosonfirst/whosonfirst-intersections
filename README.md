@@ -17,6 +17,28 @@ This is work in progress. Specifically we are trying to figure out to operationa
 5. Geneate Voronoi polygons from the set of resulting points
 6. Clip polygons to a container Who's On First polygon (typically a locality)
 
+## Databases
+
+Something something something. Databases. Something something something. Schemas need to be written. Something something something.
+
+### Database A
+
+Database `A` is where source data is stored. It contains a `geom` field that is whatever `shp2pgsql` decides it needs and an arbitrary number of properties.
+
+### Database B
+
+Database `B` is where the union of line segments (for roads) derived from database `A` is stored. It contains three fields: a WOF ID representing the locality for roads; a street name; a `geom` field that is a `LineString`.
+
+### Database C
+
+Database `C` is where all the intersections derived from database `B` are stored. It contains four fields: a WOF ID representing the locality for each intersections; street name `X` and street name `Y` (the intersection); a `geom` field that is a `Point`.
+
+### Database D
+
+Database `D` is where all the Voronoi polygons derived from the points in database `C` are stored. It contains four fields: a WOF ID representing the locality for each intersections; street name `X` and street name `Y` (the intersection); a `geom` field that is a `Polygon`.
+
+_TBD: Whether database `D` contains only the raw Voronoi polygons or the clipped (to a WOF locality) polygons. Probably the latter._
+
 ## Example
 
 ### Setup
