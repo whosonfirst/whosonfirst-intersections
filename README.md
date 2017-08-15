@@ -10,9 +10,10 @@ This is work in progress. Specifically we are trying to figure out to operationa
 
 1. Find source data
 2. Prepare and import source data into Postgres with `shp2pgsql`
-3a. Find the list of unique street names
-3b. Dissolve line segments for each street name in to a single linestring
-3c. Store linestrings in a new table
+3. Convert all the road segments to unified line strings
+* Find the list of unique street names
+* Dissolve line segments for each street name in to a single linestring
+* Store linestrings in a new table
 4. Find all the intersections for the set of linestrings as points
 5. Geneate Voronoi polygons from the set of resulting points
 6. Clip polygons to a container Who's On First polygon (typically a locality)
